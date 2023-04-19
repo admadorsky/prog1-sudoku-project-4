@@ -13,4 +13,4 @@ class Cell:
         self.sketched_value = value
 
     def draw(self):
-        return none
+        print("hello world")
