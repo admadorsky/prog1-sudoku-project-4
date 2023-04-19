@@ -1,3 +1,6 @@
+import pygame, sys, constants
+from sudoku import Sudoku
+
 class Cell:
     def __init__(self, value, row, col, screen):
         self.value = value
@@ -13,4 +16,4 @@ class Cell:
         self.sketched_value = value
 
     def draw(self):
-        print("hello world")
+        return None
