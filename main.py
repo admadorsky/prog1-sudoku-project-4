@@ -11,3 +11,4 @@ if __name__ == "__main__":
     sudoku = Sudoku(N, K)
     sudoku.fillValues()
     sudoku.printSudoku()
+
