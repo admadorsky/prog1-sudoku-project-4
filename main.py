@@ -11,7 +11,6 @@ import pygame, sys, constants
 if __name__ == "__main__":
 
     # initialize variables for a sudoku board
-
     pygame.init()
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
     pygame.display.set_caption("Sudoku")
@@ -24,11 +23,14 @@ if __name__ == "__main__":
 
     # runtime loop
     while True:
+
         # event loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            # detect mouse click to select a cell
             if event.type == pygame.MOUSEBUTTONUP:
                 x, y = event.pos
                 board.select(x, y)
