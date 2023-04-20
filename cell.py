@@ -3,11 +3,13 @@ from sudoku import Sudoku
 
 class Cell:
     def __init__(self, value, row, col, screen):
+
         self.value = value
         self.row = row
         self.col = col
         self.screen = screen
         self.set_sketched_value = 0
+        self.selected = False
 
     def set_cell_value(self, value):
         self.value = int(input())
@@ -15,7 +17,47 @@ class Cell:
     def set_sketched_value(self, value):
         self.sketched_value = int(input())
 
-    def draw(self, x, y):
+    def draw(self):
         cell_font = pygame.font.Font(None, constants.CELL_FONT)
-        cell_value_surf = cell_font.render(str(self.value), 0, constants.NUMBER_COLOR)
-        cell_value_rect = cell_value_surf.get_rect(center=(x, y))
+        if self.value == 0:
+            printed_value = ""
+        else:
+            printed_value = self.value
+        cell_value_surf = cell_font.render(str(printed_value), 0, constants.NUMBER_COLOR)
+        cell_value_rect = cell_value_surf.get_rect(center=((self.row * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2),
+                                                           (self.col * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2)))
+        self.screen.blit(cell_value_surf, cell_value_rect)
+
+        def draw_outline():
+            pygame.draw.line(
+                self.screen,
+                constants.SELECTED_COLOR,
+                ((self.row * constants.SQUARE_SIZE), (self.col * constants.SQUARE_SIZE)),
+                (((self.row + 1) * constants.SQUARE_SIZE), ((self.col) * constants.SQUARE_SIZE)),
+                constants.LINE_WIDTH_THICK
+            )
+            pygame.draw.line(
+                self.screen,
+                constants.SELECTED_COLOR,
+                ((self.row * constants.SQUARE_SIZE), ((self.col + 1) * constants.SQUARE_SIZE)),
+                (((self.row + 1) * constants.SQUARE_SIZE), ((self.col + 1) * constants.SQUARE_SIZE)),
+                constants.LINE_WIDTH_THICK
+            )
+            pygame.draw.line(
+                self.screen,
+                constants.SELECTED_COLOR,
+                (((self.row + 1) * constants.SQUARE_SIZE), (self.col * constants.SQUARE_SIZE)),
+                (((self.row + 1) * constants.SQUARE_SIZE), ((self.col + 1) * constants.SQUARE_SIZE)),
+                constants.LINE_WIDTH_THICK
+            )
+            pygame.draw.line(
+                self.screen,
+                constants.SELECTED_COLOR,
+                ((self.row * constants.SQUARE_SIZE), ((self.col) * constants.SQUARE_SIZE)),
+                (((self.row) * constants.SQUARE_SIZE), ((self.col + 1) * constants.SQUARE_SIZE)),
+                constants.LINE_WIDTH_THICK
+            )
+
+        if self.selected == True:
+            draw_outline()
+

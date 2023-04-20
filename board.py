@@ -8,8 +8,9 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
-
-    def draw(self):cells_list = []
+        self.cells_list = []
+        self.selected_cell_row = -1
+        self.selected_cell_col = -1
 
         def initialize_board():
             N = 9
@@ -18,10 +19,15 @@ class Board:
             sudoku.fillValues()
 
             for i in range(N):
+                row = []
                 for j in range(N):
-                    current_cell = Cell(sudoku[i][j], i, j, self.screen)
-                    global cells_list
-                    cells_list.append(current_cell)
+                    current_cell = Cell(sudoku.mat[i][j], i, j, self.screen)
+                    row.append(current_cell)
+                    # global cells_list
+                self.cells_list.append(row)
+        initialize_board()
+
+    def draw(self):
 
         def draw_grid():
             self.screen.fill(constants.BG_COLOR)
@@ -63,6 +69,23 @@ class Board:
                         constants.LINE_WIDTH
                     )
 
-        initialize_board()
         draw_grid()
+        for row, contents in enumerate(self.cells_list):
+            for cell in self.cells_list[row]:
+                cell.draw()
 
+    def select(self, x, y):
+        row, col = self.click(x, y)
+        self.selected_cell_row = row
+        self.selected_cell_col = col
+        # Deselct all cells
+        for row_count, contents in enumerate(self.cells_list):
+            for index, cell in enumerate(self.cells_list[row_count]):
+                self.cells_list[row_count][index].selected = False
+        # Select clicked cell
+        self.cells_list[row][col].selected = True
+
+    def click(self, x, y):
+        row = x // constants.SQUARE_SIZE
+        col = y // constants.SQUARE_SIZE
+        return row, col

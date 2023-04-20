@@ -19,6 +19,9 @@ if __name__ == "__main__":
     # create a sudoku board object
     board = Board(constants.WIDTH, constants.HEIGHT, screen, 0)
 
+    board.draw()
+    pygame.display.update()
+
     # runtime loop
     while True:
         # event loop
@@ -26,8 +29,9 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONUP:
+                x, y = event.pos
+                board.select(x, y)
+                board.draw()
 
-        # draw the board
-        board.draw()
-        pygame.display.update()
-
+            pygame.display.update()
