@@ -8,6 +8,8 @@ import math
 class Sudoku:
     def __init__(self, N, K):
 
+        self.N = N
+        self.K = K
         # Compute square root of N
         SRNd = math.sqrt(N)
         self.SRN = int(SRNd)

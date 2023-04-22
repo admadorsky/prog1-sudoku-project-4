@@ -44,3 +44,5 @@ class SudokuGenerator:
 
     def fill_remaining(self, row, col):
         return self.sudoku.fillRemaining(row, col)
+    def fill_values(self):
+        return self.sudoku.fillValues()
