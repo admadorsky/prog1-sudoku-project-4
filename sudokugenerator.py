@@ -34,3 +34,6 @@ class SudokuGenerator:
     def is_valid(self, row, col, num):
         return self.sudoku.checkIfSafe(row, col, num)
         # uses checkIfSafe function instead
+
+    def fill_values(self):
+        return self.sudoku.fillValues()

@@ -5,6 +5,7 @@
 import pygame, sys, constants
 from sudoku import Sudoku
 from cell import Cell
+from sudokugenerator import SudokuGenerator
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -19,15 +20,15 @@ class Board:
         def initialize_board():
             N = 9
             K = 40
-            sudoku = Sudoku(N, K)
-            sudoku.fillValues()
+            generated_sudoku = SudokuGenerator(constants.BOARD_ROWSCOLS, constants.REMOVED_CELLS)
+
+            # print(generated_sudoku.get_board())  # for debugging purposes
 
             for i in range(N):
                 row = []
                 for j in range(N):
-                    current_cell = Cell(sudoku.mat[i][j], i, j, self.screen)
+                    current_cell = Cell(generated_sudoku.get_board()[i][j], i, j, self.screen)
                     row.append(current_cell)
-                    # global cells_list
                 self.cells_list.append(row)
         initialize_board()
 
@@ -82,7 +83,7 @@ class Board:
         row, col = self.click(x, y)
         self.selected_cell_row = row
         self.selected_cell_col = col
-        # Deselct all cells
+        # Deselect all cells
         for row_count, contents in enumerate(self.cells_list):
             for index, cell in enumerate(self.cells_list[row_count]):
                 self.cells_list[row_count][index].selected = False
