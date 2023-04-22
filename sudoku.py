@@ -6,7 +6,13 @@ import random
 import math
 
 class Sudoku:
-    def __init__(self, N, K):
+    def __init__(self, row_length, removed_cells, N, K):
+        # row_length and removed_cells are equivalent to N and K; replaceable
+        self.row_length = row_length
+        self.removed_cells = removed_cells
+        # self.board = self.mat (below)
+        self.board = [[0 for _ in range(self.row_length)] for _ in range(self.row_length)]
+        self.box_length = int(math.sqrt(row_length))
         self.N = N
         self.K = K
 
@@ -14,6 +20,22 @@ class Sudoku:
         SRNd = math.sqrt(N)
         self.SRN = int(SRNd)
         self.mat = [[0 for _ in range(N)] for _ in range(N)]
+        self.fillValues()
+
+    def get_board(self):
+        return self.mat
+
+    def valid_in_row(self, row, num):
+        return num not in self.mat[row]
+
+    def valid_in_col(self, col, num):
+        return num not in [self.mat[i][col] for i in range(self.N)]
+
+    def valid_in_box(self, row_start, col_start, num):
+        return self.unUsedInBox(row_start, col_start, num)
+
+    def is_valid(self, row, col, num):
+        return self.checkIfSafe(row, col, num)
 
     def fillValues(self):
         # Fill the diagonal of SRN x SRN matrices
