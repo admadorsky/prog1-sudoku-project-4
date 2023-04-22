@@ -93,3 +93,40 @@ class Board:
         row = x // constants.SQUARE_SIZE
         col = y // constants.SQUARE_SIZE
         return row, col
+    
+    def clear(self):
+        self.cells_list[self.selected_cell_row][self.selected_cell_col].value = 0      
+
+    def sketch(self, value):
+        self.cells_list[self.selected_cell_row][self.selected_cell_col].value = value
+
+    def place_number(self, value):
+        self.cells_list[self.selected_cell_row][self.selected_cell_col].value = value
+
+    def reset_to_original(self):
+        for i in range(self.cells_list[0]):
+            for j in range(self.cells_list[0]):
+                self.cells_list[i][j].value = 0
+
+    def is_full(self):
+        for i in range(self.cells_list[0]):
+            for j in range(self.cells_list[0]):
+                if self.cells_list[i][j].value == 0:
+                    return False                
+        return True
+
+    def update_board(self):
+        Sudoku.printSudoku()
+
+    def find_empty(self):
+        for i in range(self.cells_list[0]):
+            for j in range(self.cells_list[0]):
+                if self.cells_list[i][j].value == 0:
+                    return i, j
+
+    def check_board(self):
+        for i in range(self.cells_list[0]):
+            for j in range(self.cells_list[0]):
+                if self.cells_list[i][j] != self.sudoku.mat[i][j]:
+                    return False
+        return True                    
