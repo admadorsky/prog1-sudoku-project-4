@@ -5,8 +5,9 @@
 from sudoku import Sudoku, math
 
 # create the SudokuGenerator class here
-class SudokuGenerator:
 
+
+class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
         # row_length and removed_cells are equivalent to N and K; replaceable
         self.row_length = row_length
@@ -34,3 +35,12 @@ class SudokuGenerator:
     def is_valid(self, row, col, num):
         return self.sudoku.checkIfSafe(row, col, num)
         # uses checkIfSafe function instead
+
+    def fill_box(self, row_start, col_start):
+        return self.sudoku.fillBox(row_start, col_start)
+
+    def fill_diagonal(self):
+        return self.sudoku.fillDiagonal()
+
+    def fill_remaining(self, row, col):
+        return self.sudoku.fillRemaining(row, col)
