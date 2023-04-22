@@ -13,8 +13,6 @@ class Sudoku:
         # self.board = self.mat (below)
         self.board = [[0 for _ in range(self.row_length)] for _ in range(self.row_length)]
         self.box_length = int(math.sqrt(row_length))
-        self.N = N
-        self.K = K
 
         # Compute square root of N
         SRNd = math.sqrt(N)
@@ -36,7 +34,7 @@ class Sudoku:
 
     def is_valid(self, row, col, num):
         return self.checkIfSafe(row, col, num)
-
+        # uses checkIfSafe function instead
     def fillValues(self):
         # Fill the diagonal of SRN x SRN matrices
         self.fillDiagonal()
