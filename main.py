@@ -49,21 +49,22 @@ if __name__ == "__main__":
             board.select(x, y)
             board.draw()
 
-    digits = [pygame.K_1,
-              pygame.K_2,
-              pygame.K_3,
-              pygame.K_4,
-              pygame.K_5,
-              pygame.K_6,
-              pygame.K_7,
-              pygame.K_8,
-              pygame.K_9]
-
     def sketch_value():
+        digits = [pygame.K_1,
+                  pygame.K_2,
+                  pygame.K_3,
+                  pygame.K_4,
+                  pygame.K_5,
+                  pygame.K_6,
+                  pygame.K_7,
+                  pygame.K_8,
+                  pygame.K_9]
+
         for index, digit in enumerate(digits):
             value = index + 1
-            if event.type == digit:
-                board.sketch(index + 1)
+            if event.key == digit:
+                board.sketch(value)
+                board.draw()
 
     # runtime loop
     while True:
@@ -80,5 +81,6 @@ if __name__ == "__main__":
 
             if event.type == pygame.KEYDOWN:
                 arrowkey_selection()
+                sketch_value()
 
             pygame.display.update()

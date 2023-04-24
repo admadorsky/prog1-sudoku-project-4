@@ -90,7 +90,7 @@ class Board:
                 cell.draw()
 
     def select(self, x, y):
-        row, col = self.click(x, y)
+        col, row = self.click(x, y)
         self.selected_cell_row = row
         self.selected_cell_col = col
         # Deselect all cells
@@ -101,15 +101,16 @@ class Board:
         self.cells_list[row][col].selected = True
 
     def click(self, x, y):
-        row = x // constants.SQUARE_SIZE
-        col = y // constants.SQUARE_SIZE
-        return row, col
+        col = x // constants.SQUARE_SIZE
+        row = y // constants.SQUARE_SIZE
+        return col, row
     
     def clear(self):
         self.cells_list[self.selected_cell_row][self.selected_cell_col].value = 0      
 
     def sketch(self, value):
-        self.cells_list[self.selected_cell_row][self.selected_cell_col].value = value
+        sketched_cell = self.cells_list[self.selected_cell_row][self.selected_cell_col]
+        sketched_cell.set_sketched_value(value)
 
     def place_number(self, value):
         self.cells_list[self.selected_cell_row][self.selected_cell_col].value = value
