@@ -18,8 +18,52 @@ if __name__ == "__main__":
     # create a sudoku board object
     board = Board(constants.WIDTH, constants.HEIGHT, screen, 0)
 
+    # select the center cell by default
+    x, y = 4 * constants.SQUARE_SIZE, 4 * constants.SQUARE_SIZE
+
     board.draw()
     pygame.display.update()
+
+    def click_selection():
+        global x, y
+        x, y = event.pos
+        board.select(x, y)
+        board.draw()
+
+    def arrowkey_selection():
+        global x, y
+        if event.key == pygame.K_LEFT:
+            x -= constants.SQUARE_SIZE
+            board.select(x, y)
+            board.draw()
+        if event.key == pygame.K_RIGHT:
+            x += constants.SQUARE_SIZE
+            board.select(x, y)
+            board.draw()
+        if event.key == pygame.K_UP:
+            y -= constants.SQUARE_SIZE
+            board.select(x, y)
+            board.draw()
+        if event.key == pygame.K_DOWN:
+            y += constants.SQUARE_SIZE
+            board.select(x, y)
+            board.draw()
+
+    digits = [pygame.K_1,
+              pygame.K_2,
+              pygame.K_3,
+              pygame.K_4,
+              pygame.K_5,
+              pygame.K_6,
+              pygame.K_7,
+              pygame.K_8,
+              pygame.K_9]
+
+    def sketch_value():
+        for index, digit in enumerate(digits):
+            value = index + 1
+            if event.type == digit:
+                board.sketch(index + 1)
 
     # runtime loop
     while True:
@@ -32,8 +76,9 @@ if __name__ == "__main__":
 
             # detect mouse click to select a cell
             if event.type == pygame.MOUSEBUTTONUP:
-                x, y = event.pos
-                board.select(x, y)
-                board.draw()
+                click_selection()
+
+            if event.type == pygame.KEYDOWN:
+                arrowkey_selection()
 
             pygame.display.update()

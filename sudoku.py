@@ -16,23 +16,6 @@ class Sudoku:
         self.mat = [[0 for _ in range(N)] for _ in range(N)]
         self.fillValues()
 
-    #
-    # def get_board(self):
-    #     return self.mat
-    #
-    # def valid_in_row(self, row, num):
-    #     return num not in self.mat[row]
-    #
-    # def valid_in_col(self, col, num):
-    #     return num not in [self.mat[i][col] for i in range(self.N)]
-    #
-    # def valid_in_box(self, row_start, col_start, num):
-    #     return self.unUsedInBox(row_start, col_start, num)
-    #
-    # def is_valid(self, row, col, num):
-    #     return self.checkIfSafe(row, col, num)
-    #     # uses checkIfSafe function instead
-
     def fillValues(self):
         # Fill the diagonal of SRN x SRN matrices
         self.fillDiagonal()

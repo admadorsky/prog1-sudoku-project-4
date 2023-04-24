@@ -32,8 +32,8 @@ class Cell:
 
         # initialize each cell's surface and rectangle objects
         cell_value_surf = cell_font.render(str(printed_value), 0, constants.NUMBER_COLOR)
-        cell_value_rect = cell_value_surf.get_rect(center=((self.row * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2),
-                                                           (self.col * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2)))
+        cell_value_rect = cell_value_surf.get_rect(center=((self.col * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2),
+                                                           (self.row * constants.SQUARE_SIZE) + (constants.SQUARE_SIZE // 2)))
         # draw the cell
         self.screen.blit(cell_value_surf, cell_value_rect)
 

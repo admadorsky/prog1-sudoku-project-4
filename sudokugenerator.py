@@ -46,3 +46,6 @@ class SudokuGenerator:
         return self.sudoku.fillRemaining(row, col)
     def fill_values(self):
         return self.sudoku.fillValues()
+
+    def remove_cells(self):
+        self.sudoku.removeKDigits()

@@ -16,20 +16,25 @@ class Board:
         self.cells_list = []
         self.selected_cell_row = -1
         self.selected_cell_col = -1
+        self.generated_sudoku = []
+        self.solution = []
 
         def initialize_board():
-            N = 9
-            K = 40
-            generated_sudoku = SudokuGenerator(constants.BOARD_ROWSCOLS, constants.REMOVED_CELLS)
+            # N = 9
+            # K = 40
+            self.generated_sudoku = SudokuGenerator(constants.BOARD_ROWSCOLS, constants.REMOVED_CELLS)
+            board = self.generated_sudoku.get_board()
+            print(board)
 
             # print(generated_sudoku.get_board())  # for debugging purposes
 
-            for i in range(N):
+            for i in range(constants.BOARD_ROWSCOLS):
                 row = []
-                for j in range(N):
-                    current_cell = Cell(generated_sudoku.get_board()[i][j], i, j, self.screen)
+                for j in range(constants.BOARD_ROWSCOLS):
+                    current_cell = Cell(self.generated_sudoku.get_board()[i][j], i, j, self.screen)
                     row.append(current_cell)
                 self.cells_list.append(row)
+
         initialize_board()
 
     def draw(self):
