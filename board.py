@@ -117,13 +117,13 @@ class Board:
     def reset_to_original(self):
         for i in range(len(self.cells_list[0])):
             for j in range(len(self.cells_list[0])):
-                self.cells_list[i][j].value = 0
+                self.cells_list[i][j].value = self.solution[i][j]
 
     def is_full(self):
         for i in range(len(self.cells_list[0])):
             for j in range(len(self.cells_list[0])):
                 if self.cells_list[i][j].value == 0:
-                    return False                
+                    return False              
         
         return True
 
@@ -139,8 +139,6 @@ class Board:
     def check_board(self):
         for i in range(len(self.cells_list[0])):
             for j in range(len(self.cells_list[0])):
-                if self.cells_list[i][j] != self.sudoku.mat[i][j]:
+                if self.cells_list[i][j] != self.solution[i][j]:
                     return False
         return True                    
-
-
