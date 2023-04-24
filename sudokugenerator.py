@@ -8,12 +8,10 @@ from sudoku import Sudoku, math
 
 
 class SudokuGenerator:
-    def __init__(self, row_length, removed_cells):
+    def __init__(self, row_length):
         # row_length and removed_cells are equivalent to N and K; replaceable
         self.row_length = row_length
-        self.removed_cells = removed_cells
-
-        self.sudoku = Sudoku(row_length, removed_cells)
+        self.sudoku = Sudoku(row_length)
 
         # self.board = self.mat (below)
         # self.board = [[0 for _ in range(self.row_length)] for _ in range(self.row_length)]
@@ -47,5 +45,5 @@ class SudokuGenerator:
     def fill_values(self):
         return self.sudoku.fillValues()
 
-    def remove_cells(self):
-        self.sudoku.removeKDigits()
+    def remove_cells(self, K):
+        self.sudoku.removeKDigits(K)

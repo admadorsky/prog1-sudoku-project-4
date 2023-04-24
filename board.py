@@ -1,6 +1,7 @@
 # Project 4: Sudoku by Anthony Madorsky, Muhammad Ali, Alexander Hennecke, and Joshua Park.
 # Sudoku board generating code adapted from a GeeksforGeeks article "Program for Sudoku Generator"
 # by Aarti_Rathi and Ankur Trisal https://www.geeksforgeeks.org/program-sudoku-generator/
+import copy
 
 import pygame, sys, constants
 from sudoku import Sudoku
@@ -22,9 +23,13 @@ class Board:
         def initialize_board():
             # N = 9
             # K = 40
-            self.generated_sudoku = SudokuGenerator(constants.BOARD_ROWSCOLS, constants.REMOVED_CELLS)
-            board = self.generated_sudoku.get_board()
-            print(board)
+            # create a sudoku board
+            self.generated_sudoku = SudokuGenerator(constants.BOARD_ROWSCOLS)
+            # copy the board with all values into solution list
+            self.solution = copy.deepcopy(self.generated_sudoku.get_board())
+            # remove cells to make a playable board
+            self.generated_sudoku.remove_cells(constants.REMOVED_CELLS)
+
 
             # print(generated_sudoku.get_board())  # for debugging purposes
 

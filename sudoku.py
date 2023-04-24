@@ -6,10 +6,9 @@ import random
 import math
 
 class Sudoku:
-    def __init__(self, N, K):
+    def __init__(self, N):
 
         self.N = N
-        self.K = K
         # Compute square root of N
         SRNd = math.sqrt(N)
         self.SRN = int(SRNd)
@@ -22,9 +21,6 @@ class Sudoku:
 
         # Fill remaining blocks
         self.fillRemaining(0, self.SRN)
-
-        # Remove Randomly K digits to make game
-        self.removeKDigits()
 
     def fillDiagonal(self):
         for i in range(0, self.N, self.SRN):
@@ -91,8 +87,8 @@ class Sudoku:
         # No valid value was found, so backtrack
         return False
 
-    def removeKDigits(self):
-        count = self.K
+    def removeKDigits(self, K):
+        count = K
 
         while (count != 0):
             i = self.randomGenerator(self.N) - 1
