@@ -15,8 +15,54 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
     pygame.display.set_caption("Sudoku")
 
+    def main_menu():
+        screen.fill(constants.BG_COLOR)
+        # text   
+        welcome = pygame.font.Font('freesansbold.ttf', 32).render('Welcome to Sudoku', True, 'black')
+        screen.blit(welcome, (65, 100))
+        difficulty_selection = pygame.font.Font('freesansbold.ttf', 26).render('Select Game Mode:', True, 'black')
+        screen.blit(difficulty_selection, (100, 230))
+
+        # easy button
+        pygame.draw.rect(screen, 'orange', [65, 300, 70, 40])
+        easy = pygame.font.Font('freesansbold.ttf', 18).render('EASY', True, 'white')
+        screen.blit(easy, (75, 310))
+
+        # medium button
+        pygame.draw.rect(screen, 'orange', [185, 300, 70, 40])
+        medium = pygame.font.Font('freesansbold.ttf', 17).render('MEDIUM', True, 'white')
+        screen.blit(medium, (185, 310))
+
+        # hard button
+        easy_button = pygame.draw.rect(screen, 'orange', [305, 300, 70, 40])
+        hard = pygame.font.Font('freesansbold.ttf', 18).render('HARD', True, 'white')
+        screen.blit(hard, (315, 310))
+
+    menu_running = True    
+    while menu_running:
+        main_menu()
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONUP:
+                if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                    difficulty = 30
+                    print("easy")
+                    menu_running = False
+                elif (pygame.mouse.get_pos()[0] >= 185 and pygame.mouse.get_pos()[0] <= 255) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                    difficulty = 40
+                    print("medium")
+                    menu_running = False
+                elif (pygame.mouse.get_pos()[0] >= 305 and pygame.mouse.get_pos()[0] <= 375) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                    difficulty = 50
+                    print("hard")
+                    menu_running = False
+    
+    
     # create a sudoku board object
-    board = Board(constants.WIDTH, constants.HEIGHT, screen, 0)
+    board = Board(constants.WIDTH, constants.HEIGHT, screen, difficulty)
 
     # select the center cell by default
     x, y = 4 * constants.SQUARE_SIZE, 4 * constants.SQUARE_SIZE
