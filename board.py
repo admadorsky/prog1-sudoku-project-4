@@ -28,7 +28,7 @@ class Board:
             # copy the board with all values into solution list
             self.solution = copy.deepcopy(self.generated_sudoku.get_board())
             # remove cells to make a playable board
-            self.generated_sudoku.remove_cells(constants.REMOVED_CELLS)
+            self.generated_sudoku.remove_cells(constants.difficulty)
 
 
             # print(generated_sudoku.get_board())  # for debugging purposes
