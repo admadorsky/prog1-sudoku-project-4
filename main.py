@@ -14,6 +14,7 @@ if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
     pygame.display.set_caption("Sudoku")
+    game_over_font = pygame.font.Font(None, constants.GAME_OVER_FONT)
 
     def main_menu():
         screen.fill(constants.BG_COLOR)
@@ -111,6 +112,14 @@ if __name__ == "__main__":
             if event.type == digit:
                 board.sketch(index + 1)
 
+    def draw_game_over():
+        screen.fill(constants.BG_COLOR)
+
+        end_text = 'Game Over!'
+        end_surf = game_over_font.render(end_text, True, constants.LINE_COLOR)
+        end_rect = end_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2))
+        screen.blit(end_surf, end_rect)
+
     # runtime loop
     while True:
 
@@ -126,5 +135,10 @@ if __name__ == "__main__":
 
             if event.type == pygame.KEYDOWN:
                 arrowkey_selection()
+
+            if game_over:
+                pygame.display.update()
+                pygame.time.delay(1000)
+                draw_game_over()
 
             pygame.display.update()
