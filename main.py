@@ -15,6 +15,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
     pygame.display.set_caption("Sudoku")
     game_over_font = pygame.font.Font(None, constants.GAME_OVER_FONT)
+    game_over = False
 
     def main_menu():
         screen.fill(constants.BG_COLOR)
