@@ -113,6 +113,15 @@ if __name__ == "__main__":
             if event.key == digit:
                 board.sketch(value)
                 board.draw()
+                
+    def fill_value():
+        if event.key == pygame.K_RETURN:
+            selected_cell = board.cells_list[board.selected_cell_row][board.selected_cell_col]
+            sketched_value = selected_cell.sketched_value
+            if sketched_value != 0:
+                selected_cell.set_cell_value(sketched_value)
+                board.draw()
+
 
     def draw_game_over():
         screen.fill(constants.BG_COLOR)
@@ -138,6 +147,8 @@ if __name__ == "__main__":
             if event.type == pygame.KEYDOWN:
                 arrowkey_selection()
                 sketch_value()
+                if event.key == pygame.K_RETURN:
+                    fill_value()
 
             if game_over:
                 pygame.display.update()
