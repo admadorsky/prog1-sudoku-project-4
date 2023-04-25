@@ -5,6 +5,7 @@
 from sudoku import Sudoku
 from cell import Cell
 from board import Board
+from sudokugenerator import SudokuGenerator
 import pygame, sys, constants
 
 # driver code
@@ -16,6 +17,7 @@ if __name__ == "__main__":
     pygame.display.set_caption("Sudoku")
     game_over_font = pygame.font.Font(None, constants.GAME_OVER_FONT)
     game_over = False
+    sudoku_generator = SudokuGenerator(constants.BOARD_ROWSCOLS)
 
     def main_menu():
         screen.fill(constants.BG_COLOR)
@@ -113,7 +115,7 @@ if __name__ == "__main__":
             if event.key == digit:
                 board.sketch(value)
                 board.draw()
-                
+
     def fill_value():
         if event.key == pygame.K_RETURN:
             selected_cell = board.cells_list[board.selected_cell_row][board.selected_cell_col]
@@ -122,6 +124,14 @@ if __name__ == "__main__":
                 selected_cell.set_cell_value(sketched_value)
                 board.draw()
 
+    def evaluate_board():
+        for i in range(constants.BOARD_ROWSCOLS):
+            for j in range(constants.BOARD_ROWSCOLS):
+                num = board.cells_list[i][j].value
+                if board.check_board():
+                    return True
+                if SudokuGenerator(constants.BOARD_ROWSCOLS).is_valid(i, j, num):
+                    return True
 
     def draw_game_over():
         screen.fill(constants.BG_COLOR)
@@ -154,5 +164,15 @@ if __name__ == "__main__":
                 pygame.display.update()
                 pygame.time.delay(1000)
                 draw_game_over()
+
+            if board.is_full():
+                # evaluates whether board is solved correctly
+
+                for i in range(constants.BOARD_ROWSCOLS):
+                    for j in range(constants.BOARD_ROWSCOLS):
+                        num = board.cells_list[i][j].value
+                        # print statement for troubleshooting
+                        print(f'{num}, {i}, {j}, {sudoku_generator.is_valid(i, j, num)}')
+
 
             pygame.display.update()
