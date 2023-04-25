@@ -138,8 +138,15 @@ class Board:
                     return i, j
 
     def check_board(self):
-        for i in range(len(self.cells_list[0])):
-            for j in range(len(self.cells_list[0])):
-                if self.cells_list[i][j] != self.solution[i][j]:
+        for row, list in enumerate(self.cells_list):
+            for col, cell in enumerate(list):
+                if cell != self.solution[col][row]:
+                    # print(f"row: {row}, col: {col}, expected: {self.solution[col][row]}, found: {self.cells_list[col][row].value}")
                     return False
-        return True                    
+        return True
+
+        # for i in range(len(self.cells_list[0])):
+        #     for j in range(len(self.cells_list[0])):
+        #         if self.cells_list[i][j] != self.solution[i][j]:
+        #             return False
+        # return True

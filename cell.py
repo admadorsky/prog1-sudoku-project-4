@@ -20,10 +20,8 @@ class Cell:
 
     def set_sketched_value(self, value):
         self.sketched_value = value
-        print(self.sketched_value)
 
     def draw(self):
-        print(self.sketched_value)
         cell_font = pygame.font.Font(None, constants.CELL_FONT)
         cell_sketch_font = pygame.font.Font(None, constants.CELL_SKETCH_FONT)
 

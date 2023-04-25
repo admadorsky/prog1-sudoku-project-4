@@ -168,11 +168,14 @@ if __name__ == "__main__":
             if board.is_full():
                 # evaluates whether board is solved correctly
 
-                for i in range(constants.BOARD_ROWSCOLS):
-                    for j in range(constants.BOARD_ROWSCOLS):
-                        num = board.cells_list[i][j].value
-                        # print statement for troubleshooting
-                        print(f'{num}, {i}, {j}, {sudoku_generator.is_valid(i, j, num)}')
+                board.check_board()
+                print(board.check_board())
+
+                # for i in range(constants.BOARD_ROWSCOLS):
+                #     for j in range(constants.BOARD_ROWSCOLS):
+                #         num = board.cells_list[i][j].value
+                #         # print statement for troubleshooting
+                #         print(f'{num}, {i}, {j}, {sudoku_generator.is_valid(i, j, num)}')
 
 
             pygame.display.update()
