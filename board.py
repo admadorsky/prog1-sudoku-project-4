@@ -139,10 +139,11 @@ class Board:
                     return i, j
 
     def check_board(self):
+        print(self.solution)
         for row, list in enumerate(self.cells_list):
             for col, cell in enumerate(list):
-                if cell != self.solution[col][row]:
-                    # print(f"row: {row}, col: {col}, expected: {self.solution[col][row]}, found: {self.cells_list[col][row].value}")
+                if cell.value != self.solution[col][row]:
+                    print(f"row: {row}, col: {col}, expected: {self.solution[col][row]}, found: {cell.value}")
                     return False
         return True
 

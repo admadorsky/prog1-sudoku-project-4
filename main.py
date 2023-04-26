@@ -17,6 +17,7 @@ if __name__ == "__main__":
     pygame.display.set_caption("Sudoku")
     game_over_font = pygame.font.Font(None, constants.GAME_OVER_FONT)
     game_over = False
+    game_won = False
     sudoku_generator = SudokuGenerator(constants.BOARD_ROWSCOLS)
 
     def main_menu():
@@ -126,10 +127,20 @@ if __name__ == "__main__":
         end_rect = end_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2))
         screen.blit(end_surf, end_rect)
 
+    def draw_game_won():
+        screen.fill(constants.BG_COLOR)
+
+        end_text = 'Game Won!'
+        end_surf = game_over_font.render(end_text, True, constants.LINE_COLOR)
+        end_rect = end_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2))
+        screen.blit(end_surf, end_rect)
+
     while True:
 
         game_running = False
         menu_running = True
+        game_won = False
+        game_over = False
 
         while menu_running:
             main_menu()
@@ -141,7 +152,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONUP:
                     if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (
                             pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                        difficulty = 30
+                        difficulty = 1
                         # print("easy")
                         menu_running = False
                         game_running = True
@@ -229,17 +240,43 @@ if __name__ == "__main__":
                         fill_value()
                         in_progress_menu()
 
-                if game_over == True:
-                    pygame.display.update()
-                    pygame.time.delay(1000)
-                    draw_game_over()
-
                 if board.is_full():
                     # evaluates whether board is solved correctly
-                    board.check_board()
-                    game_over = True
+                    if board.check_board() == False:
+                        game_over = True
+                    elif board.check_board() == True:
+                        game_won = True
                     game_running = False
 
                 pygame.display.update()
+
+        while game_over:
+            pygame.time.delay(1000)
+            draw_game_over()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pygame.quit()
+                    sys.exit()
+
+            pygame.display.update()
+
+        while game_won:
+            pygame.time.delay(1000)
+            draw_game_won()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pygame.quit()
+                    sys.exit()
+
+            pygame.display.update()
+
+
 
 
