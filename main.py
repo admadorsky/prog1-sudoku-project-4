@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     # initialize variables for a sudoku board
     pygame.init()
-    screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
+    screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT + 50))
     pygame.display.set_caption("Sudoku")
     game_over_font = pygame.font.Font(None, constants.GAME_OVER_FONT)
     game_over = False

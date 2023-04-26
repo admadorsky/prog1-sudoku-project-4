@@ -54,7 +54,7 @@ class Board:
                         self.screen,
                         constants.LINE_COLOR,
                         (0, i * constants.SQUARE_SIZE),
-                        (self.width, i * constants.SQUARE_SIZE),
+                        (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE, i * constants.SQUARE_SIZE),
                         constants.LINE_WIDTH_THICK
                     )
                     # draw vertical lines
@@ -62,7 +62,7 @@ class Board:
                         self.screen,
                         constants.LINE_COLOR,
                         (i * constants.SQUARE_SIZE, 0),
-                        (i * constants.SQUARE_SIZE, self.height),
+                        (i * constants.SQUARE_SIZE, constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE),
                         constants.LINE_WIDTH_THICK
                     )
                 # draws thin lines for all other rows/cols
@@ -72,7 +72,7 @@ class Board:
                         self.screen,
                         constants.LINE_COLOR,
                         (0, i * constants.SQUARE_SIZE),
-                        (self.width, i * constants.SQUARE_SIZE),
+                        (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE, i * constants.SQUARE_SIZE),
                         constants.LINE_WIDTH
                     )
                     # draw vertical lines
@@ -80,7 +80,7 @@ class Board:
                         self.screen,
                         constants.LINE_COLOR,
                         (i * constants.SQUARE_SIZE, 0),
-                        (i * constants.SQUARE_SIZE, self.height),
+                        (i * constants.SQUARE_SIZE, constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE),
                         constants.LINE_WIDTH
                     )
 
@@ -101,8 +101,8 @@ class Board:
         self.cells_list[row][col].selected = True
 
     def click(self, x, y):
-        col = x // constants.SQUARE_SIZEn
-        row = y // constants.SQUARE_SIZE
+        col = int((x // constants.SQUARE_SIZE) % constants.BOARD_ROWSCOLS)
+        row = int((y // constants.SQUARE_SIZE) % constants.BOARD_ROWSCOLS)
         return col, row
     
     def clear(self):
