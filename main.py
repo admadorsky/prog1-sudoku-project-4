@@ -58,37 +58,6 @@ if __name__ == "__main__":
         restart = pygame.font.Font('freesansbold.ttf', 18).render('EXIT', True, 'white')
         screen.blit(restart, (315, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE) + 15))
 
-    menu_running = True    
-    while menu_running:
-        main_menu()
-        pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONUP:
-                if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                    difficulty = 30
-                    print("easy")
-                    menu_running = False
-                elif (pygame.mouse.get_pos()[0] >= 185 and pygame.mouse.get_pos()[0] <= 255) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                    difficulty = 40
-                    print("medium")
-                    menu_running = False
-                elif (pygame.mouse.get_pos()[0] >= 305 and pygame.mouse.get_pos()[0] <= 375) and (pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                    difficulty = 50
-                    print("hard")
-                    menu_running = False
-    
-    # create a sudoku board object
-    board = Board(constants.WIDTH, constants.HEIGHT, screen, difficulty)
-
-    # select the center cell by default
-    x, y = 4 * constants.SQUARE_SIZE, 4 * constants.SQUARE_SIZE
-
-    board.draw()
-    pygame.display.update()
-
     def click_selection():
         global x, y
         x, y = event.pos
@@ -157,39 +126,120 @@ if __name__ == "__main__":
         end_rect = end_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2))
         screen.blit(end_surf, end_rect)
 
-
-    in_progress_menu()
-
-    # runtime loop
     while True:
 
-        # event loop
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        game_running = False
+        menu_running = True
 
-            # detect mouse click to select a cell
-            if event.type == pygame.MOUSEBUTTONUP:
-                click_selection()
-                in_progress_menu()
+        while menu_running:
+            main_menu()
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (
+                            pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                        difficulty = 30
+                        # print("easy")
+                        menu_running = False
+                        game_running = True
+                    elif (pygame.mouse.get_pos()[0] >= 185 and pygame.mouse.get_pos()[0] <= 255) and (
+                            pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                        difficulty = 40
+                        # print("medium")
+                        menu_running = False
+                        game_running = True
+                    elif (pygame.mouse.get_pos()[0] >= 305 and pygame.mouse.get_pos()[0] <= 375) and (
+                            pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
+                        difficulty = 50
+                        # print("hard")
+                        menu_running = False
+                        game_running = True
 
-            if event.type == pygame.KEYDOWN:
-                arrowkey_selection()
-                sketch_value()
-                in_progress_menu()
-                if event.key == pygame.K_RETURN:
-                    fill_value()
+        # create a sudoku board object
+        board = Board(constants.WIDTH, constants.HEIGHT, screen, difficulty)
+
+        # select the center cell by default
+        x, y = 4 * constants.SQUARE_SIZE, 4 * constants.SQUARE_SIZE
+
+        board.draw()
+        pygame.display.update()
+
+        # runtime loop
+        while game_running:
+
+            in_progress_menu()
+
+            # event loop
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                # detect mouse click
+                if event.type == pygame.MOUSEBUTTONUP:
+                    click_selection()
                     in_progress_menu()
 
-            if game_over == True:
+                    # reset button
+                    if (
+                            pygame.mouse.get_pos()[0] >= 65 and
+                            pygame.mouse.get_pos()[0] <= 135 and
+                            pygame.mouse.get_pos()[1] >= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5) and
+                            pygame.mouse.get_pos()[1] <= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 45)
+                    ):
+                        for row, list in enumerate(board.cells_list):
+                            for col, cell in enumerate(board.cells_list[row]):
+                                if board.cells_list[row][col].sketched_value != 0:
+                                    board.cells_list[row][col].sketched_value = 0
+                                    board.cells_list[row][col].value = 0
+                        board.draw()
+                        in_progress_menu()
+                        print("reset")
+
+                    # restart button
+                    if (
+                            pygame.mouse.get_pos()[0] >= 175 and
+                            pygame.mouse.get_pos()[0] <= 275 and
+                            pygame.mouse.get_pos()[1] >= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5) and
+                            pygame.mouse.get_pos()[1] <= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 45)
+                    ):
+                        menu_running = True
+                        print("restart")
+                        game_running = False
+
+                    # exit button
+                    if (
+                            pygame.mouse.get_pos()[0] >= 305 and
+                            pygame.mouse.get_pos()[0] <= 375 and
+                            pygame.mouse.get_pos()[1] >= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5) and
+                            pygame.mouse.get_pos()[1] <= (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 45)
+                    ):
+                        print("exit")
+                        pygame.quit()
+                        sys.exit()
+
+                if event.type == pygame.KEYDOWN:
+                    arrowkey_selection()
+                    sketch_value()
+                    in_progress_menu()
+                    if event.key == pygame.K_RETURN:
+                        fill_value()
+                        in_progress_menu()
+
+                if game_over == True:
+                    pygame.display.update()
+                    pygame.time.delay(1000)
+                    draw_game_over()
+
+                if board.is_full():
+                    # evaluates whether board is solved correctly
+                    board.check_board()
+                    game_over = True
+                    game_running = False
+
                 pygame.display.update()
-                pygame.time.delay(1000)
-                draw_game_over()
 
-            if board.is_full():
-                # evaluates whether board is solved correctly
-                board.check_board()
-                game_over = True
 
-            pygame.display.update()
