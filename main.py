@@ -152,7 +152,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONUP:
                     if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (
                             pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                        difficulty = 30
+                        difficulty = 1
                         # print("easy")
                         menu_running = False
                         game_running = True
@@ -253,27 +253,52 @@ if __name__ == "__main__":
         while game_over:
             pygame.time.delay(1000)
             draw_game_over()
+
+            # draw restart button
+            pygame.draw.rect(screen, 'orange', [180, 300, 90, 40])
+            restart = pygame.font.Font('freesansbold.ttf', 18).render('RESTART', True, 'white')
+            screen.blit(restart, (185, 310))
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONUP:
-                    pygame.quit()
-                    sys.exit()
+                    if event.type == pygame.MOUSEBUTTONUP:
+                        if (
+                                pygame.mouse.get_pos()[0] >= 180 and
+                                pygame.mouse.get_pos()[0] <= 270 and
+                                pygame.mouse.get_pos()[1] >= 300 and
+                                pygame.mouse.get_pos()[1] <= 340
+                        ):
+                            menu_running = True
+                            game_over = False
 
             pygame.display.update()
 
         while game_won:
+
             pygame.time.delay(1000)
             draw_game_won()
+
+            # draw exit button
+            pygame.draw.rect(screen, 'orange', [190, 300, 70, 40])
+            exit = pygame.font.Font('freesansbold.ttf', 18).render('EXIT', True, 'white')
+            screen.blit(exit, (200, 310))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONUP:
-                    pygame.quit()
-                    sys.exit()
+                    if (
+                            pygame.mouse.get_pos()[0] >= 190 and
+                            pygame.mouse.get_pos()[0] <= 260 and
+                            pygame.mouse.get_pos()[1] >= 300 and
+                            pygame.mouse.get_pos()[1] <= 340
+                    ):
+                        pygame.quit()
+                        sys.exit()
 
             pygame.display.update()
 
