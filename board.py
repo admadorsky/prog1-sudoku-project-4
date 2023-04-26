@@ -101,7 +101,7 @@ class Board:
         self.cells_list[row][col].selected = True
 
     def click(self, x, y):
-        col = x // constants.SQUARE_SIZE
+        col = x // constants.SQUARE_SIZEn
         row = y // constants.SQUARE_SIZE
         return col, row
     
@@ -110,7 +110,8 @@ class Board:
 
     def sketch(self, value):
         sketched_cell = self.cells_list[self.selected_cell_row][self.selected_cell_col]
-        sketched_cell.set_sketched_value(value)
+        if sketched_cell.value == 0:
+            sketched_cell.set_sketched_value(value)
 
     def place_number(self, value):
         self.cells_list[self.selected_cell_row][self.selected_cell_col].value = value
