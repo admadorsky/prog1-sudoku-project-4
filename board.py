@@ -142,7 +142,7 @@ class Board:
         print(self.solution)
         for row, list in enumerate(self.cells_list):
             for col, cell in enumerate(list):
-                if cell.value != self.solution[col][row]:
+                if cell.value != self.solution[row][col]:
                     print(f"row: {row}, col: {col}, expected: {self.solution[col][row]}, found: {cell.value}")
                     return False
         return True
