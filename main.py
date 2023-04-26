@@ -42,6 +42,22 @@ if __name__ == "__main__":
         hard = pygame.font.Font('freesansbold.ttf', 18).render('HARD', True, 'white')
         screen.blit(hard, (315, 310))
 
+    def in_progress_menu():
+        # reset button
+        pygame.draw.rect(screen, 'orange', [65, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5), 80, 40])
+        reset = pygame.font.Font('freesansbold.ttf', 18).render('RESET', True, 'white')
+        screen.blit(reset, (75, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE) + 15))
+
+        # restart button
+        pygame.draw.rect(screen, 'orange', [175, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5), 100, 40])
+        restart = pygame.font.Font('freesansbold.ttf', 18).render('RESTART', True, 'white')
+        screen.blit(restart, (185, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE) + 15))
+
+        # exit button
+        pygame.draw.rect(screen, 'orange', [305, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE + 5), 70, 40])
+        restart = pygame.font.Font('freesansbold.ttf', 18).render('EXIT', True, 'white')
+        screen.blit(restart, (315, (constants.BOARD_ROWSCOLS * constants.SQUARE_SIZE) + 15))
+
     menu_running = True    
     while menu_running:
         main_menu()
@@ -64,7 +80,6 @@ if __name__ == "__main__":
                     print("hard")
                     menu_running = False
     
-    
     # create a sudoku board object
     board = Board(constants.WIDTH, constants.HEIGHT, screen, difficulty)
 
@@ -77,8 +92,9 @@ if __name__ == "__main__":
     def click_selection():
         global x, y
         x, y = event.pos
-        board.select(x, y)
-        board.draw()
+        if x <= constants.WIDTH and y <= constants.HEIGHT:
+            board.select(x, y)
+            board.draw()
 
     def arrowkey_selection():
         global x, y
@@ -141,6 +157,9 @@ if __name__ == "__main__":
         end_rect = end_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2))
         screen.blit(end_surf, end_rect)
 
+
+    in_progress_menu()
+
     # runtime loop
     while True:
 
@@ -153,29 +172,24 @@ if __name__ == "__main__":
             # detect mouse click to select a cell
             if event.type == pygame.MOUSEBUTTONUP:
                 click_selection()
+                in_progress_menu()
 
             if event.type == pygame.KEYDOWN:
                 arrowkey_selection()
                 sketch_value()
+                in_progress_menu()
                 if event.key == pygame.K_RETURN:
                     fill_value()
+                    in_progress_menu()
 
-            if game_over:
+            if game_over == True:
                 pygame.display.update()
                 pygame.time.delay(1000)
                 draw_game_over()
 
             if board.is_full():
                 # evaluates whether board is solved correctly
-
                 board.check_board()
-                print(board.check_board())
-
-                # for i in range(constants.BOARD_ROWSCOLS):
-                #     for j in range(constants.BOARD_ROWSCOLS):
-                #         num = board.cells_list[i][j].value
-                #         # print statement for troubleshooting
-                #         print(f'{num}, {i}, {j}, {sudoku_generator.is_valid(i, j, num)}')
-
+                game_over = True
 
             pygame.display.update()

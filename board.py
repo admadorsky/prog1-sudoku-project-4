@@ -46,7 +46,7 @@ class Board:
 
         def draw_grid():
             self.screen.fill(constants.BG_COLOR)
-            for i in range(1, constants.BOARD_ROWSCOLS):
+            for i in range(0, constants.BOARD_ROWSCOLS + 1):
                 # draws thick lines for every third row/col
                 if i % 3 == 0:
                     # draw horizontal lines
