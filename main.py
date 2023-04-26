@@ -152,7 +152,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONUP:
                     if (pygame.mouse.get_pos()[0] >= 65 and pygame.mouse.get_pos()[0] <= 135) and (
                             pygame.mouse.get_pos()[1] >= 300 and pygame.mouse.get_pos()[1] <= 340):
-                        difficulty = 1
+                        difficulty = 30
                         # print("easy")
                         menu_running = False
                         game_running = True
